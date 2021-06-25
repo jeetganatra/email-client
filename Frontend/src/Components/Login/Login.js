@@ -97,7 +97,7 @@ const Login = () => {
           <Typography variant="h5">
             {isSignedUp ? "Sign In" : "Sign Up"}
           </Typography>
-          <p style={{ color: "red" }}>{err}</p>
+          <p style={{ color: "red" }}>{err.error}</p>
           <form className={classes.form} onSubmit={handleOnSubmit}>
             <Grid container spacing={2}>
               {!isSignedUp && (

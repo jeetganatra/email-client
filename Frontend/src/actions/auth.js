@@ -6,6 +6,7 @@ export const signin = (formData, history) => async (dispatch) => {
     console.log(data);
     localStorage.setItem("profile", JSON.stringify({ ...data }));
     dispatch({ type: "ERR", payload: "" });
+    dispatch({ type: "LOGIN", payload: true });
     history.push("/home");
   } catch (error) {
     if (error) {
@@ -21,6 +22,7 @@ export const signup = (formData, history) => async (dispatch) => {
     console.log(data);
     localStorage.setItem("profile", JSON.stringify({ ...data }));
     dispatch({ type: "ERR", payload: "" });
+    dispatch({ type: "LOGIN", payload: true });
     history.push("/");
   } catch (error) {
     if (error) {

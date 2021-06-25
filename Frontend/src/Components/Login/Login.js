@@ -12,6 +12,7 @@ import useStyles from "./styles";
 import Input from "./Input";
 import { GoogleLogin } from "react-google-login";
 import GoogleButton from "react-google-button";
+import { signin, signup } from "../../actions/auth";
 
 const Login = () => {
   const classes = useStyles();
@@ -22,13 +23,19 @@ const Login = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    firstName: "",
-    lastName: "",
+    fname: "",
+    lname: "",
   });
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted");
+    if (isSignedUp) {
+      console.log("signIN");
+      signin(formData);
+    } else {
+      console.log("signUp");
+      signup(formData);
+    }
   };
 
   const handleChange = (e) => {
@@ -40,8 +47,8 @@ const Login = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      firstName: "",
-      lastName: "",
+      fname: "",
+      lname: "",
     });
     setIsSignedUp((prev) => !prev);
     setShowPassword(false);
@@ -85,14 +92,14 @@ const Login = () => {
             {!isSignedUp && (
               <>
                 <Input
-                  name="firstName"
+                  name="fname"
                   label="First Name"
                   handleChange={handleChange}
                   half
                   autofocus
                 />
                 <Input
-                  name="lastName"
+                  name="lname"
                   label="Last Name"
                   handleChange={handleChange}
                   half

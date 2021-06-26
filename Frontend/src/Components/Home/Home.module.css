@@ -1,5 +1,8 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
 .header {
-  background: #ebecc8;
+  background: #fff;
   height: 66px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -7,5 +10,34 @@
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  align-items: center;
   color: #fff;
+}
+h1,
+h2 {
+  margin: 0;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.container-left {
+  min-height: 100vh;
+}
+
+.container-right {
+  width: 100%;
 }

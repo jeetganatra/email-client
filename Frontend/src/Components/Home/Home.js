@@ -3,13 +3,11 @@ import { Button, notification, Menu, Table, Row, Col } from 'antd';
 import 'antd/dist/antd.css';
 import styles from './Home.module.css';
 import {
-  AppstoreOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  PieChartOutlined,
   DesktopOutlined,
   ContainerOutlined,
   MailOutlined,
+  MailFilled,
+  BarsOutlined,
 } from '@ant-design/icons';
 
 const Home = () => {
@@ -19,14 +17,17 @@ const Home = () => {
     current: 1,
     pageSize: 10,
     total: 200,
+    alignmentBottom: 'center',
   });
 
-  console.log(data);
+  notification['success']({
+    placement: 'bottomRight',
+    message: 'Guys! Please appreciate🤣!',
+  });
   const columns = [
     {
       title: 'Created At',
       dataIndex: 'createdAt',
-      // sorter: true,
       width: '15%',
     },
     {
@@ -52,25 +53,24 @@ const Home = () => {
   return (
     <>
       <div className={styles['header']}>
-        <h1>Scheduler</h1>
-        <div className={styles['header']}>
+        <div className={styles['header-left']}>
+          <Button onClick={() => setIsCollapsed(!isCollapsed)}>
+            <BarsOutlined />
+          </Button>
+          <MailFilled style={{ fontSize: '2rem', color: 'black' }} />
+          <div>
+            <h1>notGmail</h1>
+          </div>
+        </div>
+        <div className={styles['header-right']}>
           <h2>Avatar</h2>
           <Button type='primary' danger shape='round'>
             Logout
           </Button>
         </div>
       </div>
-      <div style={{ display: 'flex' }}>
-        <div style={{ width: 150, minHeight: '100vh' }}>
-          <Button
-            type='primary'
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            style={{ marginBottom: 16 }}
-          >
-            {React.createElement(
-              isCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined
-            )}
-          </Button>
+      <div className={styles['container']}>
+        <div className={styles['container-left']}>
           <Menu
             defaultSelectedKeys={['2']}
             defaultOpenKeys={['sub1']}
@@ -91,7 +91,7 @@ const Home = () => {
             </Menu.Item>
           </Menu>
         </div>
-        <div style={{ width: 1500 }}>
+        <div className={styles['container-right']}>
           <Table
             columns={columns}
             rowKey={(record) => record.xyz}

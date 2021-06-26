@@ -7,7 +7,7 @@ import moment from 'moment';
 const TableData = ({ category, mailList }) => {
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 1,
+    pageSize: 10,
   });
   const handleTableChange = () => {
     console.log('UPDATE_TABLE');

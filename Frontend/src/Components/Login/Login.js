@@ -5,18 +5,18 @@ import {
   Grid,
   Paper,
   Typography,
-} from "@material-ui/core";
-import LockIcon from "@material-ui/icons/Lock";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import React, { useState } from "react";
-import useStyles from "./styles";
-import Input from "./Input";
-import { GoogleLogin } from "react-google-login";
-import GoogleButton from "react-google-button";
-import { signin, signup } from "../../actions/auth";
-import TitleBar from "../TitleBar/TitleBar";
-import { useSelector } from "react-redux";
+} from '@material-ui/core';
+import LockIcon from '@material-ui/icons/Lock';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import useStyles from './styles';
+import Input from './Input';
+import { GoogleLogin } from 'react-google-login';
+import GoogleButton from 'react-google-button';
+import { signin, signup } from '../../actions/auth';
+import TitleBar from '../TitleBar/TitleBar';
+import { useSelector } from 'react-redux';
 
 const Login = () => {
   const classes = useStyles();
@@ -27,20 +27,20 @@ const Login = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState(true);
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-    fname: "",
-    lname: "",
+    email: '',
+    password: '',
+    confirmPassword: '',
+    fname: '',
+    lname: '',
   });
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
     if (isSignedUp) {
-      console.log("signIN");
+      console.log('signIN');
       dispatch(signin(formData, history));
     } else {
-      console.log("signUp");
+      console.log('signUp');
       dispatch(signup(formData, history));
     }
   };
@@ -51,16 +51,16 @@ const Login = () => {
 
   const toggle = () => {
     setFormData({
-      email: "",
-      password: "",
-      confirmPassword: "",
-      fname: "",
-      lname: "",
+      email: '',
+      password: '',
+      confirmPassword: '',
+      fname: '',
+      lname: '',
     });
     setIsSignedUp((prev) => !prev);
     setShowPassword(false);
     setShowConfirmPassword(false);
-    dispatch({ type: "ERR", payload: "" });
+    dispatch({ type: 'ERR', payload: '' });
   };
 
   const handleShowPassword = () => {
@@ -77,9 +77,10 @@ const Login = () => {
     const token = res?.tokenId;
     try {
       // console.log(profile, token);
-      localStorage.setItem("profile", JSON.stringify({ profile, token }));
-      dispatch({ type: "LOGIN", payload: true });
-      history.push("/home");
+      localStorage.setItem('profile', JSON.stringify({ profile, token }));
+      dispatch({ type: 'LOGIN', payload: true });
+      localStorage.setItem('isLogged', true);
+      history.push('/home');
     } catch (error) {
       console.log(error);
     }
@@ -92,76 +93,76 @@ const Login = () => {
   return (
     <div>
       <TitleBar />
-      <Container component="main" maxWidth="xs">
+      <Container component='main' maxWidth='xs'>
         <Paper className={classes.paper} elevation={3}>
           <Avatar className={classes.avatar}>
             <LockIcon />
           </Avatar>
-          <Typography variant="h5">
-            {isSignedUp ? "Sign In" : "Sign Up"}
+          <Typography variant='h5'>
+            {isSignedUp ? 'Sign In' : 'Sign Up'}
           </Typography>
-          <p style={{ color: "red" }}>{err.error}</p>
+          <p style={{ color: 'red' }}>{err.error}</p>
           <form className={classes.form} onSubmit={handleOnSubmit}>
             <Grid container spacing={2}>
               {!isSignedUp && (
                 <>
                   <Input
-                    name="fname"
-                    label="First Name"
+                    name='fname'
+                    label='First Name'
                     handleChange={handleChange}
                     half
                     autofocus
                   />
                   <Input
-                    name="lname"
-                    label="Last Name"
+                    name='lname'
+                    label='Last Name'
                     handleChange={handleChange}
                     half
                   />
                 </>
               )}
               <Input
-                name="email"
+                name='email'
                 value={formData.email}
-                label="Email"
+                label='Email'
                 handleChange={handleChange}
-                type="email"
+                type='email'
               />
               <Input
-                name="password"
+                name='password'
                 value={formData.password}
-                label="Password"
+                label='Password'
                 handleChange={handleChange}
                 handleShowPassword={handleShowPassword}
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
               />
               {!isSignedUp && (
                 <Input
-                  name="confirmPassword"
-                  label="Confirm Password"
+                  name='confirmPassword'
+                  label='Confirm Password'
                   handleShowPassword={handleShowConfirmPassword}
                   handleChange={handleChange}
-                  type={showConfirmPassword ? "text" : "password"}
+                  type={showConfirmPassword ? 'text' : 'password'}
                 />
               )}
             </Grid>
             <Button
-              type="submit"
+              type='submit'
               fullWidth
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               className={classes.submit}
             >
-              {isSignedUp ? "Sign in" : "Sign up"}
+              {isSignedUp ? 'Sign in' : 'Sign up'}
             </Button>
 
             <GoogleLogin
-              clientId="795985652085-6ussjfntbaepe2fj9o244lntnbfk5su0.apps.googleusercontent.com"
+              clientId='795985652085-6ussjfntbaepe2fj9o244lntnbfk5su0.apps.googleusercontent.com'
               render={(renderProps) => (
-                <div class="g-signin2" data-width="1000" data-height="200">
+                <div class='g-signin2' data-width='1000' data-height='200'>
                   <GoogleButton
                     onClick={renderProps.onClick}
-                    style={{ width: "363px", marginBottom: "10px" }}
+                    style={{ width: '363px', marginBottom: '10px' }}
                     disabled={renderProps.disabled}
                   >
                     Sign in with Google
@@ -170,15 +171,15 @@ const Login = () => {
               )}
               onSuccess={googleSuccess}
               onFailure={googleFailure}
-              style={{ marginTop: "100px" }}
-              cookiePolicy="single_host_origin"
+              style={{ marginTop: '100px' }}
+              cookiePolicy='single_host_origin'
             />
 
-            <Grid container justify="flex-end">
+            <Grid container justify='flex-end'>
               <Button onClick={toggle}>
                 {isSignedUp
                   ? "Don't have an account??Sign Up"
-                  : "Already have an account!! Sign In"}
+                  : 'Already have an account!! Sign In'}
               </Button>
             </Grid>
           </form>

@@ -15,52 +15,9 @@ const TableData = ({ category, mailList }) => {
   };
 
   useEffect(() => {
+    console.log('USEEFFECT');
     handleTableChange();
   }, [mailList]);
-
-  const time = mailList.map((mail) => {
-    const date = new Date(mail.scheduledAt);
-    return date.toTimeString().substring(0, 8);
-  });
-
-  // console.log(time);
-
-  const dates = mailList.map((mail) => {
-    const date = new Date(mail.scheduledAt);
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let dt = date.getDate();
-
-    if (dt < 10) {
-      dt = '0' + dt;
-    }
-    if (month < 10) {
-      month = '0' + month;
-    }
-
-    return dt + '/' + month + '/' + year;
-  });
-
-  // console.log(dates);
-
-  const todayDate = new Date();
-
-  const curTime = todayDate.toTimeString().substring(0, 8);
-  // console.log(curTime);
-
-  let year = todayDate.getFullYear();
-  let month = todayDate.getMonth() + 1;
-  let dt = todayDate.getDate();
-
-  if (dt < 10) {
-    dt = '0' + dt;
-  }
-  if (month < 10) {
-    month = '0' + month;
-  }
-
-  const curDate = dt + '/' + month + '/' + year;
-  // console.log(curDate);
 
   const columns = [
     {
@@ -73,10 +30,6 @@ const TableData = ({ category, mailList }) => {
       title: 'Scheduled for',
       dataIndex: 'scheduledFor',
       render: (post) => (post !== '' ? `${post}` : 'Not Scheduled'),
-      filters: [
-        { text: 'Every minute', value: 'male' },
-        { text: 'Female', value: 'female' },
-      ],
       width: '15%',
     },
     {

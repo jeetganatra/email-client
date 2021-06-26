@@ -8,6 +8,7 @@ const Compose = ({ setKeyValue }) => {
   const { Title } = Typography;
   const { Option } = Select;
   const [isModalVisible, setIsModalVisible] = useState(true);
+  const [schedule, setSchedule] = useState('');
   const handleCancel = () => {
     setIsModalVisible(false);
     setKeyValue('2');
@@ -20,6 +21,22 @@ const Compose = ({ setKeyValue }) => {
       span: 19,
     },
   };
+
+  const handleOnFinish = (e) => {
+    const mailDetails = {
+      to: e.to,
+      cc: e.cc,
+      subject: e.subject,
+      body: e.body,
+      scheduledFor: schedule,
+    };
+
+    // console.log(mailDetails);
+    setIsModalVisible(false);
+    setKeyValue('2');
+    setSchedule('');
+  };
+
   return (
     <div>
       <Modal
@@ -33,7 +50,12 @@ const Compose = ({ setKeyValue }) => {
           Compose
         </Title>
         <Divider>New message</Divider>
-        <Form {...layout} name='composeMail' className={styles['form-box']}>
+        <Form
+          {...layout}
+          name='composeMail'
+          className={styles['form-box']}
+          onFinish={handleOnFinish}
+        >
           <Form.Item
             label='To'
             name='to'
@@ -63,11 +85,15 @@ const Compose = ({ setKeyValue }) => {
             <Button type='primary' htmlType='submit' style={{ width: '100px' }}>
               Send
             </Button>
-            <Select style={{ width: 150 }} placeholder='Select schedule'>
-              <Option value='minutely'>Every minute</Option>
-              <Option value='weekly'>Every week</Option>
-              <Option value='monthly'>Every month</Option>
-              <Option value='yearly'>Every year</Option>
+            <Select
+              style={{ width: 150 }}
+              placeholder='Select schedule'
+              onChange={(value) => setSchedule(value)}
+            >
+              <Option value='Every minute'>Every minute</Option>
+              <Option value='Every week'>Every week</Option>
+              <Option value='Every month'>Every month</Option>
+              <Option value='Every year'>Every year</Option>
             </Select>
           </Form.Item>
         </Form>

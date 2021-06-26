@@ -67,7 +67,7 @@ const TableData = ({ category, mailList }) => {
       title: 'Scheduled for',
       dataIndex: 'scheduledFor',
       filters: [
-        { text: 'Male', value: 'male' },
+        { text: 'Every minute', value: 'male' },
         { text: 'Female', value: 'female' },
       ],
       width: '15%',

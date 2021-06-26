@@ -66,6 +66,7 @@ const TableData = ({ category, mailList }) => {
     {
       title: 'Scheduled for',
       dataIndex: 'scheduledFor',
+      render: (post) => (post !== '' ? `${post}` : 'Not Scheduled'),
       filters: [
         { text: 'Every minute', value: 'male' },
         { text: 'Female', value: 'female' },

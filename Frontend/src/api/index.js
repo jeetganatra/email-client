@@ -5,3 +5,4 @@ const API = axios.create({ baseURL: 'http://localhost:5000' });
 export const signin = (formData) => API.post(`auth/signin`, formData);
 export const signup = (formData) => API.post(`auth/signup`, formData);
 export const getMails = () => API.get(`mails/`);
+export const sendMail = (formData) => API.post(`mails/add`, formData);

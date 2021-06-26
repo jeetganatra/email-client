@@ -3,7 +3,7 @@ const initialState = {
   error: '',
 };
 
-const authReducer = (state = initialState, action) => {
+const mailsReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_MAILS':
       return { ...state, mailList: action?.payload };
@@ -14,4 +14,4 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-export default authReducer;
+export default mailsReducer;

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Modal, Form, Button, Input, Typography, Select, Divider } from 'antd';
 import 'antd/dist/antd.css';
 import styles from '../Home.module.css';
+import { sendMail } from '../../actions/mails';
+import { useDispatch } from 'react-redux';
 
 const Compose = ({ setKeyValue }) => {
   console.log('COMPOSE');
@@ -9,6 +11,7 @@ const Compose = ({ setKeyValue }) => {
   const { Option } = Select;
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [schedule, setSchedule] = useState('');
+  const dispatch = useDispatch();
   const handleCancel = () => {
     setIsModalVisible(false);
     setKeyValue('2');
@@ -32,6 +35,7 @@ const Compose = ({ setKeyValue }) => {
     };
 
     // console.log(mailDetails);
+    dispatch(sendMail(mailDetails));
     setIsModalVisible(false);
     setKeyValue('2');
     setSchedule('');

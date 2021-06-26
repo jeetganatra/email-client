@@ -1,8 +1,8 @@
-import React from 'react';
-import TableData from '../Table/TableData';
+import React from "react";
+import TableData from "../Table/TableData";
 
-const History = () => {
-  return <TableData category='History' />;
+const History = ({ mailList }) => {
+  return <TableData category="History" mailList={mailList} />;
 };
 
 export default History;

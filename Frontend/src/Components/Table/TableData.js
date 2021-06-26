@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Button, notification, Menu, Table, Row, Col } from 'antd';
-import 'antd/dist/antd.css';
-import styles from '../Home.module.css';
-import moment from 'moment';
+import React, { useState } from "react";
+import { Button, notification, Menu, Table, Row, Col } from "antd";
+import "antd/dist/antd.css";
+import styles from "../Home.module.css";
+import moment from "moment";
 
 const TableData = ({ category, mailList }) => {
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
     total: 10,
-    alignmentBottom: 'center',
+    alignmentBottom: "center",
   });
 
   const time = mailList.map((mail) => {
@@ -17,7 +17,7 @@ const TableData = ({ category, mailList }) => {
     return date.toTimeString().substring(0, 8);
   });
 
-  console.log(time);
+  // console.log(time);
 
   const dates = mailList.map((mail) => {
     const date = new Date(mail.scheduledAt);
@@ -26,66 +26,66 @@ const TableData = ({ category, mailList }) => {
     let dt = date.getDate();
 
     if (dt < 10) {
-      dt = '0' + dt;
+      dt = "0" + dt;
     }
     if (month < 10) {
-      month = '0' + month;
+      month = "0" + month;
     }
 
-    return dt + '/' + month + '/' + year;
+    return dt + "/" + month + "/" + year;
   });
 
-  console.log(dates);
+  // console.log(dates);
 
   const todayDate = new Date();
 
   const curTime = todayDate.toTimeString().substring(0, 8);
-  console.log(curTime);
+  // console.log(curTime);
 
   let year = todayDate.getFullYear();
   let month = todayDate.getMonth() + 1;
   let dt = todayDate.getDate();
 
   if (dt < 10) {
-    dt = '0' + dt;
+    dt = "0" + dt;
   }
   if (month < 10) {
-    month = '0' + month;
+    month = "0" + month;
   }
 
-  const curDate = dt + '/' + month + '/' + year;
-  console.log(curDate);
+  const curDate = dt + "/" + month + "/" + year;
+  // console.log(curDate);
 
   const columns = [
     {
-      title: 'Scheduled At',
-      dataIndex: 'scheduledAt',
+      title: "Scheduled At",
+      dataIndex: "scheduledAt",
       render: (post) => `${moment(post).fromNow()}`,
-      width: '15%',
+      width: "15%",
     },
     {
-      title: 'Scheduled for',
-      dataIndex: 'scheduledFor',
-      render: (post) => (post !== '' ? `${post}` : 'Not Scheduled'),
+      title: "Scheduled for",
+      dataIndex: "scheduledFor",
+      render: (post) => (post !== "" ? `${post}` : "Not Scheduled"),
       filters: [
-        { text: 'Every minute', value: 'male' },
-        { text: 'Female', value: 'female' },
+        { text: "Every minute", value: "male" },
+        { text: "Female", value: "female" },
       ],
-      width: '15%',
+      width: "15%",
     },
     {
-      title: 'To',
-      dataIndex: 'to',
-      width: '15%',
+      title: "To",
+      dataIndex: "to",
+      width: "15%",
     },
     {
-      title: 'Subject',
-      dataIndex: 'subject',
+      title: "Subject",
+      dataIndex: "subject",
     },
   ];
 
   return (
-    <div className={styles['container-right']}>
+    <div className={styles["container-right"]}>
       <div>
         <h1>{category}</h1>
         <Table

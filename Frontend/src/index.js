@@ -5,8 +5,12 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore, compose } from "redux";
 import allReducers from "./Reducers";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-const store = createStore(allReducers, compose(applyMiddleware(thunk)));
+const store = createStore(
+  allReducers,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 ReactDOM.render(
   <Provider store={store}>

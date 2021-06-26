@@ -1,8 +1,8 @@
-import React from 'react';
-import TableData from '../Table/TableData';
+import React from "react";
+import TableData from "../Table/TableData";
 
-const Scheduled = () => {
-  return <TableData category='Scheduled' />;
+const Scheduled = ({ mailList }) => {
+  return <TableData category="Scheduled" mailList={mailList} />;
 };
 
 export default Scheduled;

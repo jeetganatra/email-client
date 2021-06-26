@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const mailSchema = mongoose.Schema({
   to: {
@@ -25,10 +25,9 @@ const mailSchema = mongoose.Schema({
   },
   scheduledAt: {
     type: Date,
-    default: Date.now,
   },
 });
 
-const Mail = mongoose.model("mail", mailSchema);
+const Mail = mongoose.model('mail', mailSchema);
 
 module.exports = Mail;

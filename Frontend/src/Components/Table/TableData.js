@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, notification, Menu, Table, Row, Col } from 'antd';
 import 'antd/dist/antd.css';
 import styles from '../Home.module.css';
@@ -7,17 +7,23 @@ import moment from 'moment';
 const TableData = ({ category, mailList }) => {
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 10,
-    total: 10,
-    alignmentBottom: 'center',
+    pageSize: 1,
   });
+  const handleTableChange = () => {
+    console.log('UPDATE_TABLE');
+    setPagination((prev) => ({ ...prev, total: mailList.length }));
+  };
+
+  useEffect(() => {
+    handleTableChange();
+  }, [mailList]);
 
   const time = mailList.map((mail) => {
     const date = new Date(mail.scheduledAt);
     return date.toTimeString().substring(0, 8);
   });
 
-  console.log(time);
+  // console.log(time);
 
   const dates = mailList.map((mail) => {
     const date = new Date(mail.scheduledAt);
@@ -35,12 +41,12 @@ const TableData = ({ category, mailList }) => {
     return dt + '/' + month + '/' + year;
   });
 
-  console.log(dates);
+  // console.log(dates);
 
   const todayDate = new Date();
 
   const curTime = todayDate.toTimeString().substring(0, 8);
-  console.log(curTime);
+  // console.log(curTime);
 
   let year = todayDate.getFullYear();
   let month = todayDate.getMonth() + 1;
@@ -54,7 +60,7 @@ const TableData = ({ category, mailList }) => {
   }
 
   const curDate = dt + '/' + month + '/' + year;
-  console.log(curDate);
+  // console.log(curDate);
 
   const columns = [
     {
@@ -90,11 +96,9 @@ const TableData = ({ category, mailList }) => {
         <h1>{category}</h1>
         <Table
           columns={columns}
-          // rowKey={(record) => record.scheduledAt}
-          pagination={pagination}
+          rowKey={(record) => record._id}
           dataSource={mailList}
-          loading={false}
-          // onChange={this.handleTableChange}
+          pagination={false}
         />
       </div>
     </div>

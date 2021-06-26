@@ -3,8 +3,7 @@ import { Button, notification, Menu, Table, Row, Col } from 'antd';
 import 'antd/dist/antd.css';
 import styles from '../Home.module.css';
 
-const TableData = ({ category }) => {
-  const [data, setData] = useState([]);
+const TableData = ({ category, mailList }) => {
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
@@ -12,10 +11,12 @@ const TableData = ({ category }) => {
     alignmentBottom: 'center',
   });
 
+  console.log(mailList);
+
   const columns = [
     {
-      title: 'Created At',
-      dataIndex: 'createdAt',
+      title: 'Scheduled At',
+      dataIndex: 'scheduledAt',
       width: '15%',
     },
     {
@@ -28,8 +29,8 @@ const TableData = ({ category }) => {
       width: '15%',
     },
     {
-      title: 'Receipent',
-      dataIndex: 'receipent',
+      title: 'To',
+      dataIndex: 'to',
       width: '15%',
     },
     {
@@ -44,9 +45,9 @@ const TableData = ({ category }) => {
         <h1>{category}</h1>
         <Table
           columns={columns}
-          rowKey={(record) => record.xyz}
+          // rowKey={(record) => record.scheduledAt}
           pagination={pagination}
-          dataSource={data}
+          dataSource={mailList}
           loading={false}
           // onChange={this.handleTableChange}
         />

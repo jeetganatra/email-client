@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Button, notification, Menu, Table, Row, Col } from 'antd';
+import { Button, notification, Menu } from 'antd';
 import 'antd/dist/antd.css';
 import styles from '../Home.module.css';
 import {
   DesktopOutlined,
   ContainerOutlined,
-  MailOutlined,
   MailFilled,
   BarsOutlined,
-  PlusCircleFilled,
   PlusOutlined,
 } from '@ant-design/icons';
 import TableData from '../Table/TableData';
@@ -27,7 +25,11 @@ const Home = () => {
   const dispatch = useDispatch();
   const mailList = useSelector((state) => state.mails.mailList);
 
+  let data = Object.keys(mailList).map(function (key, index) {
+    return mailList[key];
+  });
   console.log(mailList);
+  console.log(data);
 
   useEffect(() => {
     dispatch(getMails());
@@ -94,7 +96,7 @@ const Home = () => {
         </div>
         {keyValue === '1' && <Compose setKeyValue={setKeyValue} />}
         {(keyValue === '2' || keyValue === '1') && (
-          <TableData category='All Mails' />
+          <TableData category='All Mails' mailList={data} />
         )}
         {keyValue === '3' && <Scheduled />}
         {keyValue === '4' && <History />}

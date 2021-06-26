@@ -8,15 +8,18 @@ import {
   MailOutlined,
   MailFilled,
   BarsOutlined,
+  PlusCircleFilled,
 } from '@ant-design/icons';
 import TableData from '../Table/TableData';
 import History from '../History/History';
 import Scheduled from '../Scheduled/Scheduled';
+import Compose from '../Compose/Compose';
 
 const Home = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [keyValue, setKeyValue] = useState('2');
 
+  console.log('KEY', keyValue);
   return (
     <>
       <div className={styles['header']}>
@@ -40,13 +43,19 @@ const Home = () => {
         <div className={styles['container-left']}>
           <Menu
             defaultSelectedKeys={['2']}
-            defaultOpenKeys={['sub1']}
             mode='inline'
             inlineCollapsed={isCollapsed}
           >
-            <Menu.Item key='1' icon={<MailOutlined />}>
+            <Button
+              type='primary'
+              shape='round'
+              size='large'
+              icon={<PlusCircleFilled />}
+              onClick={() => setKeyValue('1')}
+              style={{ margin: '10px' }}
+            >
               Compose
-            </Menu.Item>
+            </Button>
             <Menu.Item
               key='2'
               icon={<ContainerOutlined />}
@@ -70,7 +79,10 @@ const Home = () => {
             </Menu.Item>
           </Menu>
         </div>
-        {keyValue === '2' && <TableData category='All Mails' />}
+        {keyValue === '1' && <Compose setKeyValue={setKeyValue} />}
+        {(keyValue === '2' || keyValue === '1') && (
+          <TableData category='All Mails' />
+        )}
         {keyValue === '3' && <Scheduled />}
         {keyValue === '4' && <History />}
       </div>

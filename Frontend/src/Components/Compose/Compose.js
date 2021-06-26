@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Modal, Form, Button, Input, Typography } from 'antd';
+import { Modal, Form, Button, Input, Typography, Select, Divider } from 'antd';
 import 'antd/dist/antd.css';
 import styles from '../Home.module.css';
 
 const Compose = ({ setKeyValue }) => {
   console.log('COMPOSE');
   const { Title } = Typography;
+  const { Option } = Select;
   const [isModalVisible, setIsModalVisible] = useState(true);
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -26,10 +27,12 @@ const Compose = ({ setKeyValue }) => {
         width={800}
         onCancel={handleCancel}
         okButtonProps={{ style: { display: 'none' } }}
+        cancelButtonProps={{ style: { display: 'none' } }}
       >
-        <Title level={4} className={styles['required-label']}>
-          New message
+        <Title level={3} className={styles['required-label']}>
+          Compose
         </Title>
+        <Divider>New message</Divider>
         <Form {...layout} name='composeMail' className={styles['form-box']}>
           <Form.Item
             label='To'
@@ -57,9 +60,15 @@ const Compose = ({ setKeyValue }) => {
           </Form.Item>
 
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 3 }}>
-            <Button type='primary' htmlType='submit'>
+            <Button type='primary' htmlType='submit' style={{ width: '100px' }}>
               Send
             </Button>
+            <Select style={{ width: 150 }} placeholder='Select schedule'>
+              <Option value='minutely'>Every minute</Option>
+              <Option value='weekly'>Every week</Option>
+              <Option value='monthly'>Every month</Option>
+              <Option value='yearly'>Every year</Option>
+            </Select>
           </Form.Item>
         </Form>
       </Modal>

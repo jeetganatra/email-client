@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const mailSchema = mongoose.Schema({
   to: {
@@ -7,7 +7,6 @@ const mailSchema = mongoose.Schema({
   },
   cc: {
     type: String,
-    required: true,
   },
   subject: {
     type: String,
@@ -28,6 +27,6 @@ const mailSchema = mongoose.Schema({
   },
 });
 
-const Mail = mongoose.model('mail', mailSchema);
+const Mail = mongoose.model("mail", mailSchema);
 
 module.exports = Mail;

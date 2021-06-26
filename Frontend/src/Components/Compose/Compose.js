@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import { Modal, Form, Button, Input, Typography, Select, Divider } from 'antd';
-import 'antd/dist/antd.css';
-import styles from '../Home.module.css';
-import { sendMail } from '../../actions/mails';
-import { useDispatch } from 'react-redux';
+import React, { useState } from "react";
+import { Modal, Form, Button, Input, Typography, Select, Divider } from "antd";
+import "antd/dist/antd.css";
+import styles from "../Home.module.css";
+import { sendMail } from "../../actions/mails";
+import { useDispatch } from "react-redux";
+import emailjs from "emailjs-com";
 
 const Compose = ({ setKeyValue }) => {
-  console.log('COMPOSE');
+  console.log("COMPOSE");
   const { Title } = Typography;
   const { Option } = Select;
   const [isModalVisible, setIsModalVisible] = useState(true);
-  const [schedule, setSchedule] = useState('');
+  const [schedule, setSchedule] = useState("");
   const dispatch = useDispatch();
   const handleCancel = () => {
     setIsModalVisible(false);
-    setKeyValue('2');
+    setKeyValue("2");
   };
   const layout = {
     labelCol: {
@@ -35,10 +36,31 @@ const Compose = ({ setKeyValue }) => {
     };
 
     // console.log(mailDetails);
-    dispatch(sendMail(mailDetails));
-    setIsModalVisible(false);
-    setKeyValue('2');
-    setSchedule('');
+
+    const doMail = (params) => {
+      var content = {
+        to_email: e.to,
+        cc: e.cc,
+        subject: e.subject,
+        message: e.body,
+      };
+      emailjs
+        .send(
+          "service_vxagp1a",
+          "template_c9sohnj",
+          content,
+          "user_1Ts9i9g7SN7YfFGLIf4Mv"
+        )
+        .then((res) => {
+          console.log("successs!!");
+          dispatch(sendMail(mailDetails));
+          setIsModalVisible(false);
+          setKeyValue("2");
+          setSchedule("");
+        });
+    };
+
+    doMail();
   };
 
   return (
@@ -47,57 +69,57 @@ const Compose = ({ setKeyValue }) => {
         visible={isModalVisible}
         width={800}
         onCancel={handleCancel}
-        okButtonProps={{ style: { display: 'none' } }}
-        cancelButtonProps={{ style: { display: 'none' } }}
+        okButtonProps={{ style: { display: "none" } }}
+        cancelButtonProps={{ style: { display: "none" } }}
       >
-        <Title level={3} className={styles['required-label']}>
+        <Title level={3} className={styles["required-label"]}>
           Compose
         </Title>
         <Divider>New message</Divider>
         <Form
           {...layout}
-          name='composeMail'
-          className={styles['form-box']}
+          name="composeMail"
+          className={styles["form-box"]}
           onFinish={handleOnFinish}
         >
           <Form.Item
-            label='To'
-            name='to'
-            rules={[{ required: true, message: 'This field cannot be empty!' }]}
+            label="To"
+            name="to"
+            rules={[{ required: true, message: "This field cannot be empty!" }]}
           >
             <Input />
           </Form.Item>
-          <Form.Item label='Cc' name='cc'>
+          <Form.Item label="Cc" name="cc">
             <Input />
           </Form.Item>
           <Form.Item
-            label='Subject'
-            name='subject'
-            rules={[{ required: true, message: 'Please Enter Subject!' }]}
+            label="Subject"
+            name="subject"
+            rules={[{ required: true, message: "Please Enter Subject!" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            label='Body'
-            name='body'
-            rules={[{ required: true, message: 'Email body cannot be empty!' }]}
+            label="Body"
+            name="body"
+            rules={[{ required: true, message: "Email body cannot be empty!" }]}
           >
             <Input.TextArea autoSize={{ minRows: 6 }} />
           </Form.Item>
 
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 3 }}>
-            <Button type='primary' htmlType='submit' style={{ width: '100px' }}>
+            <Button type="primary" htmlType="submit" style={{ width: "100px" }}>
               Send
             </Button>
             <Select
               style={{ width: 150 }}
-              placeholder='Select schedule'
+              placeholder="Select schedule"
               onChange={(value) => setSchedule(value)}
             >
-              <Option value='Every minute'>Every minute</Option>
-              <Option value='Every week'>Every week</Option>
-              <Option value='Every month'>Every month</Option>
-              <Option value='Every year'>Every year</Option>
+              <Option value="Every minute">Every minute</Option>
+              <Option value="Every week">Every week</Option>
+              <Option value="Every month">Every month</Option>
+              <Option value="Every year">Every year</Option>
             </Select>
           </Form.Item>
         </Form>

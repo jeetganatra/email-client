@@ -9,6 +9,7 @@ import {
   MailFilled,
   BarsOutlined,
   PlusCircleFilled,
+  PlusOutlined,
 } from '@ant-design/icons';
 import TableData from '../Table/TableData';
 import History from '../History/History';
@@ -50,11 +51,11 @@ const Home = () => {
               type='primary'
               shape='round'
               size='large'
-              icon={<PlusCircleFilled />}
+              icon={<PlusOutlined />}
               onClick={() => setKeyValue('1')}
-              style={{ margin: '10px' }}
+              style={{ margin: '10px', alignItems: 'center' }}
             >
-              Compose
+              {!isCollapsed && `Compose`}
             </Button>
             <Menu.Item
               key='2'

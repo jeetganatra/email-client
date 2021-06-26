@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, notification, Menu, Table, Row, Col } from 'antd';
 import 'antd/dist/antd.css';
 import styles from '../Home.module.css';
@@ -15,12 +15,24 @@ import TableData from '../Table/TableData';
 import History from '../History/History';
 import Scheduled from '../Scheduled/Scheduled';
 import Compose from '../Compose/Compose';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getMails } from '../../actions/mails';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [keyValue, setKeyValue] = useState('2');
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const mailList = useSelector((state) => state.mails.mailList);
 
-  console.log('KEY', keyValue);
+  console.log(mailList);
+
+  useEffect(() => {
+    dispatch(getMails());
+  }, [keyValue]);
+
   return (
     <>
       <div className={styles['header']}>

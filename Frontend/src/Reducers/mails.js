@@ -1,15 +1,12 @@
 const initialState = {
-  isLogged: false,
+  mailList: [],
   error: '',
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOGOUT':
-      localStorage.clear();
-      return { ...state, isLogged: action?.payload };
-    case 'LOGIN':
-      return { ...state, isLogged: action?.payload };
+    case 'GET_MAILS':
+      return { ...state, mailList: action?.payload };
     case 'ERR':
       return { ...state, error: action?.payload };
     default:

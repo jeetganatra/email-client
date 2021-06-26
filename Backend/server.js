@@ -1,7 +1,7 @@
-const express = require('express');
-const dotEnv = require('dotenv').config();
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require("express");
+const dotEnv = require("dotenv").config();
+const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 
@@ -16,14 +16,11 @@ mongoose
     useFindAndModify: false,
   })
   .then(() => {
-    console.log('MONGOOSE CONNECTED!');
+    console.log("MONGOOSE CONNECTED!");
   });
 
-app.get('/', (req, res) => {
-  res.send('HEY THERE!');
-});
-
-app.use('/auth', require('./Routes/users'));
+app.use("/auth", require("./Routes/users"));
+app.use("/mails", require("./Routes/mails"));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

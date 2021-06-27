@@ -1,19 +1,20 @@
 import React from 'react';
-import { AppBar, Avatar, Toolbar, Typography } from '@material-ui/core';
-import useStyles from './styles';
-import logo from '../../images/logo.png';
-
+import { Menu, Row, Col } from 'antd';
+import 'antd/dist/antd.css';
+import styles from '../Home.module.css';
+import { MailFilled } from '@ant-design/icons';
 const TitleBar = () => {
-  const classes = useStyles();
   return (
-    <AppBar className={classes.appBar} position='static'>
-      <Toolbar>
-        <Avatar className={classes.avatar} variant='circle' src={logo} />
-        <Typography className={classes.typoGraphy} variant='h2'>
-          Not Gmail
-        </Typography>
-      </Toolbar>
-    </AppBar>
+    <div className={styles['header']}>
+      <div className={styles['header-left']}>
+        <MailFilled
+          style={{ fontSize: '2rem', color: 'black', marginLeft: '10px' }}
+        />
+        <div>
+          <h1>notGmail</h1>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -45,6 +45,8 @@ const Login = () => {
     }
   };
 
+  const { Link } = Typography;
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -175,11 +177,15 @@ const Login = () => {
               cookiePolicy='single_host_origin'
             />
 
-            <Grid container justify='flex-end'>
-              <Button onClick={toggle}>
-                {isSignedUp
-                  ? "Don't have an account??Sign Up"
-                  : 'Already have an account!! Sign In'}
+            <Grid container justify='flex-end' style={{ alignItems: 'center' }}>
+              {isSignedUp
+                ? "Don't have an account?"
+                : 'Already have an account?'}
+              <Button
+                onClick={toggle}
+                style={{ boxShadow: '2px 2px 1px grey' }}
+              >
+                {isSignedUp ? 'Sign Up' : 'Sign In'}
               </Button>
             </Grid>
           </form>

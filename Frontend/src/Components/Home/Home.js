@@ -6,7 +6,7 @@ import {
   DesktopOutlined,
   ContainerOutlined,
   MailFilled,
-  BarsOutlined,
+  MenuOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
 import TableData from '../Table/TableData';
@@ -72,30 +72,40 @@ const Home = () => {
 
   return (
     <>
-      <div className={styles['header']}>
+      <div className={`${styles.header} navbar bg-dark`}>
         <div className={styles['header-left']}>
-          <Button onClick={() => setIsCollapsed(!isCollapsed)}>
-            <BarsOutlined />
-          </Button>
-          <MailFilled style={{ fontSize: '2rem', color: 'black' }} />
-          <div>
-            <h1>notGmail</h1>
-          </div>
+          <a
+            href='#!'
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            style={{ fontSize: '1.5rem', alignItems: 'center' }}
+          >
+            <i className='fas fa-bars' />
+          </a>
+          <a
+            href='#!'
+            onClick={() => {
+              dispatch({ type: 'LOGOUT', payload: false });
+              localStorage.setItem('isLogged', false);
+              history.push('/home');
+            }}
+            style={{ fontSize: '2rem', alignItems: 'center' }}
+          >
+            <i className='fas fa-envelope' /> <span> notGmail</span>{' '}
+          </a>
         </div>
         <div className={styles['header-right']}>
           <h2>Avatar</h2>
-          <Button
-            type='primary'
-            danger
-            shape='round'
+
+          <a
+            href='#!'
             onClick={() => {
               dispatch({ type: 'LOGOUT', payload: false });
               localStorage.setItem('isLogged', false);
               history.push('/');
             }}
           >
-            Logout
-          </Button>
+            <i className='fas fa-sign-out-alt' /> <span>Logout </span>{' '}
+          </a>
         </div>
       </div>
       <div className={styles['container']}>

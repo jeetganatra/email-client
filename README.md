@@ -1,70 +1,126 @@
-# Getting Started with Create React App
+<h1 align="center">
+Email Client
+</h1>
+<p align="center">
+MongoDB, Expressjs, React/Redux, Nodejs
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Email client is a website where people can schedule mails.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Clone or Download
+```terminal
 
-### `npm start`
+git clone https://github.com/jeetganatra/email-client.git
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+npm i
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## Project Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+.gitignore
 
-### `npm run build`
+Backend/
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   package.json
+   
+   server.js
+   
+   ...
+   
+   ...
+   
+Frontend/
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   package.json
+   
+   index.html
+   
+   index.js
+   
+   App.js
+   
+   ...
+   
+   ...
+ 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Usage (run fullstack app on your machine)
 
-### `npm run eject`
+## Prerequirements
+- [MongoDB](https://gist.github.com/nrollr/9f523ae17ecdbb50311980503409aeb3)
+- [Node](https://nodejs.org/en/download/) ^10.0.0
+- [npm](https://nodejs.org/en/download/package-manager/)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Notice, you need client and server runs concurrently in different terminal session, in order to make them talk to each other
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Client-side usage(PORT: 3000)
+```terminal
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+$ cd Frontend   // go to client folder
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+$ npm i         // npm install pacakges
 
-## Learn More
+$ npm start     // run it locally
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Server-side usage(PORT: 5000)
 
-### Code Splitting
+### Prepare your secret
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+run the script at the first level:
 
-### Analyzing the Bundle Size
+(You need to add a SECRET in .env to connect to MongoDB)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+terminal
+// in the root level
 
-### Making a Progressive Web App
+$ echo "SECRET=YOUR_JWT_SECRET" >> ./Backend/.env
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+### Start
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```terminal
+$ cd Backend   // go to server folder
 
-### Deployment
+$ npm i       // npm install pacakges
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+$ node server.js // run it locally
+```
 
-### `npm run build` fails to minify
+# Screenshots of this project
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Home Page / Login Page
+![User can login (sign in or sign up) here.](https://i.imgur.com/NxQTmX1.png)
+
+## After signing in user can go to account route and make request to token-protected API endpoint
+![After signing in user can go to account](https://i.imgur.com/MP5MzK5.png)
+
+## User can compose an email and either directly send it or schedule a reccuring email as per their requirement
+![Compose email pop-up](https://i.imgur.com/kCqC8BS.png)
+
+⚠️ Note :- Currently only limited number of recurring emails will be send due to server limitations
+
+
+
+## Standard
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+
+## BUGs or comments
+
+[Create new Issues](https://github.com/jeetganatra/email-client/issues) (preferred)
+
+Email Me: jeetganatra138@gmail.com 
+
+## Authors
+[Jeet Ganatra](https://github.com/jeetganatra)
+
+[Krunal Shastri](https://github.com/krunalshastri)
+
+[Ishan Chopra](https://github.com/ishanc008)
+
+### License
+[MIT](https://github.com/jeetganatra/email-client/blob/master/LICENSE)

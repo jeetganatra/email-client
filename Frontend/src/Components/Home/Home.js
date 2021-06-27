@@ -5,8 +5,6 @@ import styles from '../Home.module.css';
 import {
   DesktopOutlined,
   ContainerOutlined,
-  MailFilled,
-  MenuOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
 import TableData from '../Table/TableData';
@@ -37,7 +35,7 @@ const Home = () => {
 
   useEffect(() => {
     console.log('use effect home');
-    if (keyValue == '2' || postReqSuc) {
+    if (keyValue === '2' || postReqSuc) {
       dispatch(getMails());
       dispatch({ type: 'POST_SUC', payload: false });
     }
@@ -46,7 +44,7 @@ const Home = () => {
   // console.log(typeof isLogged);
 
   if (isLogged === 'false') {
-    alert('Enter credentials first!!');
+    notification['error']({ message: 'Enter credentials first!' });
     history.push('/');
     return <div>login required</div>;
   }
@@ -55,9 +53,8 @@ const Home = () => {
     return mailList[key];
   });
   // console.log(mailList);
-  console.log(data);
+  // console.log(data);
   let filteredData = [];
-  let copies = [];
   for (let i = data.length - 1; i >= 0; i--) {
     if (
       data[i].creator === user.profile._id ||
@@ -137,6 +134,7 @@ const Home = () => {
               dispatch({ type: 'LOGOUT', payload: false });
               localStorage.setItem('isLogged', false);
               history.push('/');
+              notification['success']({ message: 'Logged out successfully!' });
             }}
           >
             <i className='fas fa-sign-out-alt' /> <span>Logout </span>{' '}

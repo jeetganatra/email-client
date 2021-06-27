@@ -19,6 +19,8 @@ body {
   line-height: 1.6;
   background-color: #fff;
   color: #333;
+  background-color: #ffffff;
+  background-image: url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');
 }
 
 a {

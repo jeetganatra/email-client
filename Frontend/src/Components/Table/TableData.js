@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, notification, Menu, Table, Row, Col, Tag } from 'antd';
+import { Table, Tag } from 'antd';
 import 'antd/dist/antd.css';
 import styles from '../Home.module.css';
 import moment from 'moment';
@@ -9,6 +9,7 @@ const TableData = ({ category, mailList }) => {
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
+    position: ['bottomCenter'],
   });
   const handleTableChange = (value) => {
     console.log('UPDATE_TABLE', value?.current);
@@ -32,7 +33,7 @@ const TableData = ({ category, mailList }) => {
       render: (text) => {
         return text > 1 && <Tag color='green'>{text}</Tag>;
       },
-      width: '0.5%',
+      width: '4.5%',
     },
     {
       title: 'Scheduled At',

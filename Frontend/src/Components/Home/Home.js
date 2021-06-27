@@ -28,6 +28,9 @@ const Home = () => {
   const mailList = useSelector((state) => state.mails.mailList);
   const isLogged = localStorage.getItem('isLogged');
   const user = JSON.parse(localStorage.getItem('profile'));
+  const name = JSON.parse(localStorage.getItem('profile'))?.profile?.name;
+  const fname = JSON.parse(localStorage.getItem('profile'))?.profile?.fname;
+  const lname = JSON.parse(localStorage.getItem('profile'))?.profile?.lname;
   console.log(mailList);
 
   useEffect(() => {
@@ -91,8 +94,6 @@ const Home = () => {
           <a
             href='#!'
             onClick={() => {
-              dispatch({ type: 'LOGOUT', payload: false });
-              localStorage.setItem('isLogged', false);
               history.push('/home');
             }}
             style={{ fontSize: '2rem', alignItems: 'center' }}
@@ -101,7 +102,10 @@ const Home = () => {
           </a>
         </div>
         <div className={styles['header-right']}>
-          <h2>Avatar</h2>
+          <div>
+            <i className='fas fa-user' />{' '}
+            <span> {name ? name : fname + ' ' + lname} </span>{' '}
+          </div>
 
           <a
             href='#!'

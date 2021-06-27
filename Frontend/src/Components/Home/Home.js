@@ -27,6 +27,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const mailList = useSelector((state) => state.mails.mailList);
   const isLogged = localStorage.getItem('isLogged');
+  const user = JSON.parse(localStorage.getItem('profile'));
   console.log(mailList);
 
   useEffect(() => {
@@ -47,9 +48,15 @@ const Home = () => {
   });
   // console.log(mailList);
   console.log(data);
+  const filteredData = data.filter(
+    (mail, idx) =>
+      mail.creator === user.profile._id ||
+      mail.creator === user.profile.googleId
+  );
+  console.log(filteredData);
 
-  for (let i = 0; i < data.length; i++) {
-    const mail = data[i];
+  for (let i = 0; i < filteredData.length; i++) {
+    const mail = filteredData[i];
     const curTime = new Date().getTime();
     const det = new Date(mail.scheduledAt).getTime();
     const toCheck = parseFloat((curTime - det) / (1000 * 60));
@@ -150,7 +157,7 @@ const Home = () => {
         </div>
         {keyValue === '1' && <Compose setKeyValue={setKeyValue} />}
         {(keyValue === '2' || keyValue === '1') && (
-          <TableData category='All Mails' mailList={data} />
+          <TableData category='All Mails' mailList={filteredData} />
         )}
         {keyValue === '3' && <Scheduled mailList={scheduledData} />}
         {keyValue === '4' && <History mailList={historyData} />}

@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import styles from "../Home.module.css";
 import { sendMail } from "../../actions/mails";
 import { useDispatch } from "react-redux";
-import emailjs from "emailjs-com";
+// import emailjs from "emailjs-com";
 
 const Compose = ({ setKeyValue }) => {
   console.log("COMPOSE");
@@ -37,30 +37,34 @@ const Compose = ({ setKeyValue }) => {
 
     // console.log(mailDetails);
 
-    const doMail = (params) => {
-      var content = {
-        to_email: e.to,
-        cc: e.cc,
-        subject: e.subject,
-        message: e.body,
-      };
-      emailjs
-        .send(
-          "service_vxagp1a",
-          "template_c9sohnj",
-          content,
-          "user_1Ts9i9g7SN7YfFGLIf4Mv"
-        )
-        .then((res) => {
-          console.log("successs!!");
-          dispatch(sendMail(mailDetails));
-          setIsModalVisible(false);
-          setKeyValue("2");
-          setSchedule("");
-        });
-    };
+    // const doMail = (params) => {
+    //   var content = {
+    //     to_email: e.to,
+    //     cc: e.cc,
+    //     subject: e.subject,
+    //     message: e.body,
+    //   };
+    //   emailjs
+    //     .send(
+    //       "service_vxagp1a",
+    //       "template_c9sohnj",
+    //       content,
+    //       "user_1Ts9i9g7SN7YfFGLIf4Mv"
+    //     )
+    //     .then((res) => {
+    //       console.log("successs!!");
+    //       dispatch(sendMail(mailDetails));
+    //       setIsModalVisible(false);
+    //       setKeyValue("2");
+    //       setSchedule("");
+    //     });
+    // };
 
-    doMail();
+    // doMail();
+    dispatch(sendMail(mailDetails));
+    setIsModalVisible(false);
+    setKeyValue("2");
+    setSchedule("");
   };
 
   return (

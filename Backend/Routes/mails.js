@@ -5,13 +5,6 @@ const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 
 router.get("/", (req, res) => {
-  var task1 = cron.schedule("* * * * *", () => {
-    console.log("cron 1min running");
-  });
-  var task2 = cron.schedule("* * * * * *", () => {
-    console.log("cron 2sec running");
-  });
-
   Mail.find()
     .then((mails) => res.json(mails))
     .catch((err) => res.status(400).json("Error: " + err));

@@ -5,14 +5,12 @@ import styles from '../Home.module.css';
 import { MailFilled } from '@ant-design/icons';
 const TitleBar = () => {
   return (
-    <div className={styles['header']}>
+    <div className={`${styles.header} navbar bg-dark`}>
       <div className={styles['header-left']}>
-        <MailFilled
-          style={{ fontSize: '2rem', color: 'black', marginLeft: '10px' }}
-        />
-        <div>
-          <h1>notGmail</h1>
-        </div>
+        <a href='#!' style={{ fontSize: '2rem', alignItems: 'center' }}>
+          Welcome to <i className='fas fa-envelope' />{' '}
+          <span> notGmail.....</span>{' '}
+        </a>
       </div>
     </div>
   );

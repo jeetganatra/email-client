@@ -1,8 +1,4 @@
-* {
-  font-family: Arial, Helvetica, sans-serif;
-}
 .header {
-  background: yellow;
   height: 66px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -11,16 +7,17 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
 }
+
 h1,
 h2 {
   margin: 0;
 }
+
 .header-left {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: center;
 }
 
 .header-right {
@@ -52,4 +49,8 @@ h2 {
 
 .required-label {
   padding: auto;
+}
+
+.white {
+  color: #fff;
 }

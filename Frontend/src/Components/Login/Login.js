@@ -17,6 +17,8 @@ import GoogleButton from 'react-google-button';
 import { signin, signup } from '../../actions/auth';
 import TitleBar from '../TitleBar/TitleBar';
 import { useSelector } from 'react-redux';
+import { notification } from 'antd';
+import 'antd/dist/antd.css';
 
 const Login = () => {
   const classes = useStyles();
@@ -38,9 +40,11 @@ const Login = () => {
     e.preventDefault();
     if (isSignedUp) {
       console.log('signIN');
+      notification['success']({ message: 'Signed in successfully!' });
       dispatch(signin(formData, history));
     } else {
       console.log('signUp');
+      notification['success']({ message: 'Signed in successfully!' });
       dispatch(signup(formData, history));
     }
   };
@@ -83,13 +87,14 @@ const Login = () => {
       dispatch({ type: 'LOGIN', payload: true });
       localStorage.setItem('isLogged', true);
       history.push('/home');
+      notification['success']({ message: 'Login Successful!' });
     } catch (error) {
-      console.log(error);
+      notification['error']({ message: error });
     }
   };
 
   const googleFailure = (error) => {
-    console.log(error);
+    notification['error']({ message: error });
   };
 
   return (

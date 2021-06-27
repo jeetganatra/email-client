@@ -48,21 +48,12 @@ router.post("/add", auth, (req, res) => {
   console.log("Sending Mail...");
   console.log(mailOptions);
 
-  const id = uuidv4();
-  var count = 0;
-  agenda.define(id, { concurrency: 1 }, function (job, done) {
-    count++;
-    console.log(count);
-    if (count === 4) {
-      return res.send("Post success");
-    }
+  if (scheduledFor === "") {
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
-        done(error);
       } else {
         console.log("Email sent: " + info.response);
-        done();
         const newMail = new Mail({
           to,
           cc,
@@ -73,59 +64,77 @@ router.post("/add", auth, (req, res) => {
           scheduledAt: new Date(),
         });
 
-        newMail.save();
+        newMail
+          .save()
+          .then(() => res.send(newMail))
+          .catch((err) => console.log(err));
       }
     });
-  });
+  } else {
+    console.log("here");
 
-  if (scheduledFor === "Every week") {
-    (async function () {
-      await agenda.start();
-      await agenda.every("1 week", id);
-    })();
-  }
+    const id = uuidv4();
+    var count = 0;
+    agenda.define(id, { concurrency: 1 }, function (job, done) {
+      count++;
+      console.log(count);
+      if (count === 4) {
+        return res.send("Post success");
+      }
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+          done(error);
+        } else {
+          console.log("Email sent: " + info.response);
+          done();
+          const newMail = new Mail({
+            to,
+            cc,
+            subject,
+            body,
+            scheduledFor,
+            creator: req.userId,
+            scheduledAt: new Date(),
+          });
 
-  if (scheduledFor === "Every month") {
-    (async function () {
-      await agenda.start();
-      await agenda.every("1 month", id);
-    })();
-  }
-
-  if (scheduledFor === "Every year") {
-    (async function () {
-      await agenda.start();
-      await agenda.every("1 year", id);
-    })();
-  }
-
-  if (scheduledFor === "Every minute") {
-    (async function () {
-      // IIFE to give access to async/await
-      await agenda.start();
-
-      // await agenda.every("3 minutes", "send mail");
-
-      // Alternatively, you could also do:
-      await agenda.every("1 minute", id);
-    })();
-  }
-
-  if (scheduledFor === "") {
-    const newMail = new Mail({
-      to,
-      cc,
-      subject,
-      body,
-      scheduledFor,
-      creator: req.userId,
-      scheduledAt: new Date(),
+          newMail.save();
+        }
+      });
     });
 
-    newMail
-      .save()
-      .then(() => res.json(newMail))
-      .catch((err) => console.log(err));
+    if (scheduledFor === "Every week") {
+      (async function () {
+        await agenda.start();
+        await agenda.every("1 week", id);
+      })();
+    }
+
+    if (scheduledFor === "Every month") {
+      (async function () {
+        await agenda.start();
+        await agenda.every("1 month", id);
+      })();
+    }
+
+    if (scheduledFor === "Every year") {
+      (async function () {
+        await agenda.start();
+        await agenda.every("1 year", id);
+      })();
+    }
+
+    if (scheduledFor === "Every minute") {
+      (async function () {
+        // IIFE to give access to async/await
+        await agenda.start();
+
+        // await agenda.every("3 minutes", "send mail");
+
+        // Alternatively, you could also do:
+        await agenda.every("1 minute", id);
+      })();
+    }
   }
 
   // agenda.processEvery("1 minute");

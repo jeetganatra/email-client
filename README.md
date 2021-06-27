@@ -68,17 +68,20 @@ $ npm start     // run it locally
 
 ## Server-side usage(PORT: 5000)
 
-### Prepare your secret
+### Prepare your .env file in the /Backend directory
+1) You need to add a jwt secret string in the .env file
 
-run the script at the first level:
+    ``jwt_secret="your string" ``
 
-(You need to add a SECRET in .env to connect to MongoDB)
+2) You need to add your MongoDB ATLAS URL
 
-terminal
-// in the root level
+    ``ATLAS_URL ="Your mongoDB ATLAS url``
 
-$ echo "SECRET=YOUR_JWT_SECRET" >> ./Backend/.env
+3) You need to add your gmail account credentials for sending mail
 
+    ``SENDER_MAIL = "your gmail address" ``
+ 
+    ``SENDER_PASS="password of your gmail address" ``
 
 ### Start
 

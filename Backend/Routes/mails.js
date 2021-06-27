@@ -3,6 +3,17 @@ const router = require("express").Router();
 const auth = require("../middleware/auth");
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
+const Agenda = require("agenda");
+const { v4: uuidv4 } = require("uuid");
+
+const mongoConnectionString = process.env.AGENDA_URL;
+const agenda = new Agenda({
+  db: {
+    address: mongoConnectionString,
+    options: { useUnifiedTopology: true, useNewUrlParser: true },
+  },
+});
+agenda.maxConcurrency(1);
 
 router.get("/", (req, res) => {
   Mail.find()
@@ -37,59 +48,70 @@ router.post("/add", auth, (req, res) => {
   console.log("Sending Mail...");
   console.log(mailOptions);
 
-  if (scheduledFor === "Every minute") {
-    cron.schedule("* * * * *", () => {
-      // Send e-mail
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Email sent: " + info.response);
-          const newMail = new Mail({
-            to,
-            cc,
-            subject,
-            body,
-            scheduledFor,
-            creator: req.userId,
-            scheduledAt: new Date(),
-          });
+  const id = uuidv4();
+  var count = 0;
+  agenda.define(id, { concurrency: 1 }, function (job, done) {
+    count++;
+    console.log(count);
+    if (count === 4) {
+      return res.send("Post success");
+    }
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+        done(error);
+      } else {
+        console.log("Email sent: " + info.response);
+        done();
+        const newMail = new Mail({
+          to,
+          cc,
+          subject,
+          body,
+          scheduledFor,
+          creator: req.userId,
+          scheduledAt: new Date(),
+        });
 
-          newMail.save();
-        }
-      });
+        newMail.save();
+      }
     });
-    console.log("cron exited");
+  });
+
+  if (scheduledFor === "Every week") {
+    (async function () {
+      await agenda.start();
+      await agenda.every("1 week", id);
+    })();
   }
 
-  // transporter.sendMail(mailOptions, function (error, info) {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //   }
-  // });
+  if (scheduledFor === "Every month") {
+    (async function () {
+      await agenda.start();
+      await agenda.every("1 month", id);
+    })();
+  }
 
-  // transporter.sendMail(mailOptions, function (error, info) {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     console.log("Email sent: " + info.response);
-  //     const newMail = new Mail({
-  //       to,
-  //       cc,
-  //       subject,
-  //       body,
-  //       scheduledFor,
-  //       creator: req.userId,
-  //       scheduledAt: new Date(),
-  //     });
+  if (scheduledFor === "Every year") {
+    (async function () {
+      await agenda.start();
+      await agenda.every("1 year", id);
+    })();
+  }
 
-  //     newMail
-  //       .save()
-  //       .then(() => res.json(newMail))
-  //       .catch((err) => res.status(400).json("Error: " + err));
-  //   }
-  // });
+  if (scheduledFor === "Every minute") {
+    (async function () {
+      // IIFE to give access to async/await
+      await agenda.start();
+
+      // await agenda.every("3 minutes", "send mail");
+
+      // Alternatively, you could also do:
+      await agenda.every("1 minute", id);
+    })();
+  }
+
+  agenda.processEvery("1 minute");
 });
 
 module.exports = router;

@@ -51,12 +51,31 @@ const Home = () => {
   });
   // console.log(mailList);
   console.log(data);
-  const filteredData = data.filter(
-    (mail, idx) =>
-      mail.creator === user.profile._id ||
-      mail.creator === user.profile.googleId
-  );
-  console.log(filteredData);
+  let filteredData = [];
+  let copies = [];
+  for (let i = data.length - 1; i >= 0; i--) {
+    if (
+      data[i].creator === user.profile._id ||
+      data[i].creator === user.profile.googleId
+    ) {
+      if (filteredData.length === 0) {
+        filteredData.push({ ...data[i], copies: 1 });
+      } else {
+        console.log(i, filteredData.slice(-1)[0], data[i]);
+        if (
+          data[i].body === filteredData.slice(-1)[0].body &&
+          data[i].creator === filteredData.slice(-1)[0].creator &&
+          data[i].scheduledFor === filteredData.slice(-1)[0].scheduledFor &&
+          data[i].subject === filteredData.slice(-1)[0].subject &&
+          data[i].to === filteredData.slice(-1)[0].to
+        ) {
+          filteredData.slice(-1)[0].copies++;
+        } else {
+          filteredData.push({ ...data[i], copies: 1 });
+        }
+      }
+    }
+  }
 
   for (let i = 0; i < filteredData.length; i++) {
     const mail = filteredData[i];

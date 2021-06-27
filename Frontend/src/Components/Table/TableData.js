@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, notification, Menu, Table, Row, Col } from 'antd';
+import { Button, notification, Menu, Table, Row, Col, Tag } from 'antd';
 import 'antd/dist/antd.css';
 import styles from '../Home.module.css';
 import moment from 'moment';
@@ -9,9 +9,14 @@ const TableData = ({ category, mailList }) => {
     current: 1,
     pageSize: 10,
   });
-  const handleTableChange = () => {
-    console.log('UPDATE_TABLE');
-    setPagination((prev) => ({ ...prev, total: mailList.length }));
+  const handleTableChange = (value) => {
+    console.log('UPDATE_TABLE', value?.current);
+
+    setPagination((prev) => ({
+      ...prev,
+      total: mailList.length,
+      current: value ? value.current : 1,
+    }));
   };
 
   useEffect(() => {
@@ -20,6 +25,14 @@ const TableData = ({ category, mailList }) => {
   }, [mailList]);
 
   const columns = [
+    {
+      title: '',
+      dataIndex: 'copies',
+      render: (text) => {
+        return text > 1 && <Tag color='green'>{text}</Tag>;
+      },
+      width: '0.5%',
+    },
     {
       title: 'Scheduled At',
       dataIndex: 'scheduledAt',
@@ -51,7 +64,8 @@ const TableData = ({ category, mailList }) => {
           columns={columns}
           rowKey={(record) => record._id}
           dataSource={mailList}
-          pagination={false}
+          pagination={pagination}
+          onChange={handleTableChange}
         />
       </div>
     </div>

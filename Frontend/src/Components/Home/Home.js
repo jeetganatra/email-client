@@ -19,6 +19,7 @@ import { getMails } from '../../actions/mails';
 import { useSelector } from 'react-redux';
 
 const Home = () => {
+  console.log('home called');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [keyValue, setKeyValue] = useState('2');
   let historyData = [];
@@ -26,6 +27,7 @@ const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const mailList = useSelector((state) => state.mails.mailList);
+  const postReqSuc = useSelector((state) => state.mails.postReqSuc);
   const isLogged = localStorage.getItem('isLogged');
   const user = JSON.parse(localStorage.getItem('profile'));
   const name = JSON.parse(localStorage.getItem('profile'))?.profile?.name;
@@ -34,14 +36,17 @@ const Home = () => {
   console.log(mailList);
 
   useEffect(() => {
-    dispatch(getMails());
-  }, [keyValue]);
+    console.log('use effect home');
+    if (keyValue == '2' || postReqSuc) {
+      dispatch(getMails());
+      dispatch({ type: 'POST_SUC', payload: false });
+    }
+  }, [keyValue, postReqSuc]);
 
-  console.log(typeof isLogged);
+  // console.log(typeof isLogged);
 
   if (isLogged === 'false') {
     alert('Enter credentials first!!');
-    console.log('kicked');
     history.push('/');
     return <div>login required</div>;
   }
@@ -82,7 +87,7 @@ const Home = () => {
     const curTime = new Date().getTime();
     const det = new Date(mail.scheduledAt).getTime();
     const toCheck = parseFloat((curTime - det) / (1000 * 60));
-    console.log(mail.scheduledFor);
+    // console.log(mail.scheduledFor);
 
     if (mail.scheduledFor === 'Every minute' && toCheck > 1.0) {
       historyData.push(mail);

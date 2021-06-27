@@ -15,8 +15,9 @@ export const getMails = () => async (dispatch) => {
 
 export const sendMail = (formData) => async (dispatch) => {
   try {
-    const { data } = await api.sendMail(formData);
-    console.log(data);
+    await api.sendMail(formData);
+    console.log("recieved");
+    dispatch({ type: "POST_SUC", payload: true });
   } catch (error) {
     if (error) {
       console.log(error?.response?.data.errors[0]?.msg);

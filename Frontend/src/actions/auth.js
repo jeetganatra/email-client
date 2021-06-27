@@ -25,7 +25,7 @@ export const signup = (formData, history) => async (dispatch) => {
     dispatch({ type: 'ERR', payload: '' });
     localStorage.setItem('isLogged', true);
     dispatch({ type: 'LOGIN', payload: true });
-    history.push('/');
+    history.push('/home');
   } catch (error) {
     if (error) {
       console.log(error?.response?.data.errors[0]?.msg);

@@ -5,6 +5,7 @@ import styles from '../Home.module.css';
 import moment from 'moment';
 
 const TableData = ({ category, mailList }) => {
+  console.log('table called');
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
@@ -20,7 +21,7 @@ const TableData = ({ category, mailList }) => {
   };
 
   useEffect(() => {
-    console.log('USEEFFECT');
+    console.log('USEEFFECT table');
     handleTableChange();
   }, [mailList]);
 

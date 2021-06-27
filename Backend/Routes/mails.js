@@ -2,35 +2,20 @@ const Mail = require("../Models/mailModel");
 const router = require("express").Router();
 const auth = require("../middleware/auth");
 const nodemailer = require("nodemailer");
+const cron = require("node-cron");
 
 router.get("/", (req, res) => {
+  var task1 = cron.schedule("* * * * *", () => {
+    console.log("cron 1min running");
+  });
+  var task2 = cron.schedule("* * * * * *", () => {
+    console.log("cron 2sec running");
+  });
+
   Mail.find()
     .then((mails) => res.json(mails))
     .catch((err) => res.status(400).json("Error: " + err));
 });
-
-// router.post("/add", auth, (req, res) => {
-//   const { to, cc, subject, body, scheduledFor } = req.body;
-
-//   if (!req.userId) {
-//     return res.json({ message: "Unauthenticated" });
-//   }
-
-//   const newMail = new Mail({
-//     to,
-//     cc,
-//     subject,
-//     body,
-//     scheduledFor,
-//     creator: req.userId,
-//     scheduledAt: new Date(),
-//   });
-
-//   newMail
-//     .save()
-//     .then(() => res.json(newMail))
-//     .catch((err) => res.status(400).json("Error: " + err));
-// });
 
 router.post("/add", auth, (req, res) => {
   const { to, cc, subject, body, scheduledFor } = req.body;
@@ -59,29 +44,59 @@ router.post("/add", auth, (req, res) => {
   console.log("Sending Mail...");
   console.log(mailOptions);
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-      const newMail = new Mail({
-        to,
-        cc,
-        subject,
-        body,
-        scheduledFor,
-        creator: req.userId,
-        scheduledAt: new Date(),
+  if (scheduledFor === "Every minute") {
+    cron.schedule("* * * * *", () => {
+      // Send e-mail
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+          const newMail = new Mail({
+            to,
+            cc,
+            subject,
+            body,
+            scheduledFor,
+            creator: req.userId,
+            scheduledAt: new Date(),
+          });
+
+          newMail.save();
+        }
       });
+    });
+    console.log("cron exited");
+  }
 
-      newMail
-        .save()
-        .then(() => res.json(newMail))
-        .catch((err) => res.status(400).json("Error: " + err));
-    }
-  });
+  // transporter.sendMail(mailOptions, function (error, info) {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //   }
+  // });
+
+  // transporter.sendMail(mailOptions, function (error, info) {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log("Email sent: " + info.response);
+  //     const newMail = new Mail({
+  //       to,
+  //       cc,
+  //       subject,
+  //       body,
+  //       scheduledFor,
+  //       creator: req.userId,
+  //       scheduledAt: new Date(),
+  //     });
+
+  //     newMail
+  //       .save()
+  //       .then(() => res.json(newMail))
+  //       .catch((err) => res.status(400).json("Error: " + err));
+  //   }
+  // });
 });
-
-// module.exports = router;
 
 module.exports = router;

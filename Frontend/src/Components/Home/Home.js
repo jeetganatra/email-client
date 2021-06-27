@@ -19,6 +19,7 @@ import { getMails } from "../../actions/mails";
 import { useSelector } from "react-redux";
 
 const Home = () => {
+  console.log("home called");
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [keyValue, setKeyValue] = useState("2");
   let historyData = [];
@@ -26,19 +27,24 @@ const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const mailList = useSelector((state) => state.mails.mailList);
+  const postReqSuc = useSelector((state) => state.mails.postReqSuc);
   const isLogged = localStorage.getItem("isLogged");
   const user = JSON.parse(localStorage.getItem("profile"));
-  console.log(mailList);
+  // console.log(mailList);
+  console.log(keyValue);
 
   useEffect(() => {
-    dispatch(getMails());
-  }, [keyValue]);
+    console.log("use effect home");
+    if (keyValue == "2" || postReqSuc) {
+      dispatch(getMails());
+      dispatch({ type: "POST_SUC", payload: false });
+    }
+  }, [keyValue, postReqSuc]);
 
-  console.log(typeof isLogged);
+  // console.log(typeof isLogged);
 
   if (isLogged === "false") {
     alert("Enter credentials first!!");
-    console.log("kicked");
     history.push("/");
     return <div>login required</div>;
   }
@@ -47,20 +53,20 @@ const Home = () => {
     return mailList[key];
   });
   // console.log(mailList);
-  console.log(data);
+  // console.log(data);
   const filteredData = data.filter(
     (mail, idx) =>
       mail.creator === user.profile._id ||
       mail.creator === user.profile.googleId
   );
-  console.log(filteredData);
+  // console.log(filteredData);
 
   for (let i = 0; i < filteredData.length; i++) {
     const mail = filteredData[i];
     const curTime = new Date().getTime();
     const det = new Date(mail.scheduledAt).getTime();
     const toCheck = parseFloat((curTime - det) / (1000 * 60));
-    console.log(mail.scheduledFor);
+    // console.log(mail.scheduledFor);
 
     if (mail.scheduledFor === "Every minute" && toCheck > 1.0) {
       historyData.push(mail);

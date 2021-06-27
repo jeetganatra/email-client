@@ -34,34 +34,8 @@ const Compose = ({ setKeyValue }) => {
       body: e.body,
       scheduledFor: schedule,
     };
-
-    // console.log(mailDetails);
-
-    // const doMail = (params) => {
-    //   var content = {
-    //     to_email: e.to,
-    //     cc: e.cc,
-    //     subject: e.subject,
-    //     message: e.body,
-    //   };
-    //   emailjs
-    //     .send(
-    //       "service_vxagp1a",
-    //       "template_c9sohnj",
-    //       content,
-    //       "user_1Ts9i9g7SN7YfFGLIf4Mv"
-    //     )
-    //     .then((res) => {
-    //       console.log("successs!!");
-    //       dispatch(sendMail(mailDetails));
-    //       setIsModalVisible(false);
-    //       setKeyValue("2");
-    //       setSchedule("");
-    //     });
-    // };
-
-    // doMail();
     dispatch(sendMail(mailDetails));
+    console.log("post req succ");
     setIsModalVisible(false);
     setKeyValue("2");
     setSchedule("");

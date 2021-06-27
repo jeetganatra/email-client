@@ -111,7 +111,24 @@ router.post("/add", auth, (req, res) => {
     })();
   }
 
-  agenda.processEvery("1 minute");
+  if (scheduledFor === "") {
+    const newMail = new Mail({
+      to,
+      cc,
+      subject,
+      body,
+      scheduledFor,
+      creator: req.userId,
+      scheduledAt: new Date(),
+    });
+
+    newMail
+      .save()
+      .then(() => res.json(newMail))
+      .catch((err) => console.log(err));
+  }
+
+  // agenda.processEvery("1 minute");
 });
 
 module.exports = router;

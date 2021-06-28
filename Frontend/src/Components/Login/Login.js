@@ -39,16 +39,17 @@ const Login = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     if (isSignedUp) {
-      console.log('signIN');
-      notification['success']({ message: 'Signed in successfully!' });
+      // console.log('signIN');
       dispatch(signin(formData, history));
+      err.error !== '' &&
+        notification['success']({ message: 'Signed in successfully!' });
     } else {
-      console.log('signUp');
-      notification['success']({ message: 'Signed in successfully!' });
+      // console.log('signUp');
       dispatch(signup(formData, history));
+      err.error !== '' &&
+        notification['success']({ message: 'Signed in successfully!' });
     }
   };
-
   const { Link } = Typography;
 
   const handleChange = (e) => {

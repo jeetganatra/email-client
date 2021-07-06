@@ -81,7 +81,7 @@ $ npm start     // run it locally
 
     ``SENDER_MAIL = "your gmail address" ``
  
-    ``SENDER_PASS="password of your gmail address" ``
+    ``SENDER_PASSWORD="password of your gmail address" ``
 
 ### Start
 
